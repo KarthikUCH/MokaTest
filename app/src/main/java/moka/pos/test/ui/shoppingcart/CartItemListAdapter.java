@@ -1,0 +1,85 @@
+package moka.pos.test.ui.shoppingcart;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import moka.pos.test.R;
+import moka.pos.test.data.model.CartItem;
+import moka.pos.test.ui.shoppingcart.ShoppingCartFragment.OnCartItemInteractionListener;
+
+public class CartItemListAdapter extends RecyclerView.Adapter<CartItemListAdapter.ViewHolder> {
+
+    private final List<CartItem> mValues;
+    private final ShoppingCartFragment.OnCartItemInteractionListener mListener;
+
+    public CartItemListAdapter(List<CartItem> items, OnCartItemInteractionListener listener) {
+        mValues = items;
+        mListener = listener;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.fragment_cartitem, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        final CartItem item = mValues.get(position);
+
+        if (item.getItemId() == -1) {
+            holder.tvPrice.setText(String.valueOf(item.getTotalPrice()));
+            holder.tvTitle.setText(item.getItemTitle());
+            holder.tvQuantity.setText("");
+            holder.itemView.setOnClickListener(null);
+            return;
+        }
+
+        holder.tvTitle.setText(item.getItemTitle());
+        holder.tvQuantity.setText("X" + item.getQuantity());
+        holder.tvPrice.setText(String.valueOf(item.getTotalPrice()));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.editCartItem(item);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return mValues.size();
+    }
+
+    public void swapData(ArrayList<CartItem> items) {
+        mValues.clear();
+        mValues.addAll(items);
+        notifyDataSetChanged();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_title)
+        TextView tvTitle;
+
+        @BindView(R.id.tv_quantity)
+        TextView tvQuantity;
+
+        @BindView(R.id.tv_price)
+        TextView tvPrice;
+
+        public ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
+}
