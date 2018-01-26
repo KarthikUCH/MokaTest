@@ -19,7 +19,7 @@ public class AddToCartDialogPresenter<V extends IAddToCartView> extends BasePres
 
     private int mItemId;
     private String mItemTitle;
-    private int mItemPrice;
+    private double mItemPrice;
 
     private int mQuantity = 0;
 
@@ -84,8 +84,8 @@ public class AddToCartDialogPresenter<V extends IAddToCartView> extends BasePres
                     }
                 }
 
-                int totalPrice = mQuantity * mItemPrice;
-                long discountRate = (long) (totalPrice * discount) / 100;
+                double totalPrice = mQuantity * mItemPrice;
+                double discountRate =(totalPrice * discount) / 100;
 
                 CartItem item = new CartItem(mItemId, mQuantity, discount);
                 item.setTotalPrice(totalPrice);

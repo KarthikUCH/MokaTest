@@ -18,7 +18,7 @@ public interface IShoppingCartView extends MvpView {
      *
      * @param total
      */
-    void displayFinalTotalAmount(int total);
+    void displayFinalTotalAmount(double total);
 
 
 }

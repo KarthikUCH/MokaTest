@@ -20,8 +20,8 @@ import moka.pos.test.ui.base.BasePresenter;
 
 public class ShoppingCartPresenter<V extends IShoppingCartView> extends BasePresenter<V> implements IShoppingCartPresenter<V> {
 
-    private int mIntitialTotal = 0;
-    private int mDiscountTotal = 0;
+    private double mIntitialTotal = 0;
+    private double mDiscountTotal = 0;
 
     private final ShoppingCartManager mShoppingCartManager;
     private final CompositeDisposable mCompositeDisposable;
@@ -47,13 +47,14 @@ public class ShoppingCartPresenter<V extends IShoppingCartView> extends BasePres
             }
         });
 
-        Observable<Integer> run2 = Observable.just(mShoppingCartManager.getInitialTotal());
+        Observable<Double> run2 = Observable.just(mShoppingCartManager.getInitialTotal());
 
-        Observable<Integer> run3 = Observable.just(mShoppingCartManager.getDiscountTotal());
+        Observable<Double> run3 = Observable.just(mShoppingCartManager.getDiscountTotal());
 
-        Observable.zip(run1, run2, run3, new Function3<ArrayList<CartItem>, Integer, Integer, ArrayList<CartItem>>() {
+
+        Observable.zip(run1, run2, run3, new Function3<ArrayList<CartItem>, Double, Double, ArrayList<CartItem>>() {
             @Override
-            public ArrayList<CartItem> apply(ArrayList<CartItem> items, Integer initialTotal, Integer discountTotal) throws Exception {
+            public ArrayList<CartItem> apply(ArrayList<CartItem> items, Double initialTotal, Double discountTotal) throws Exception {
                 mIntitialTotal = initialTotal;
                 mDiscountTotal = discountTotal;
                 if (items.size() > 0) {
@@ -82,14 +83,14 @@ public class ShoppingCartPresenter<V extends IShoppingCartView> extends BasePres
 
                     @Override
                     public void onComplete() {
-                        int total = mIntitialTotal - mDiscountTotal;
+                        double total = mIntitialTotal - mDiscountTotal;
                         getMvpView().displayFinalTotalAmount(total);
                     }
                 });
     }
 
     @Override
-    public CartItem getInitialTotalItem(int initialTotalAmount) {
+    public CartItem getInitialTotalItem(double initialTotalAmount) {
 
         CartItem initialTotal = new CartItem();
         initialTotal.setItemId(-1);
@@ -99,7 +100,7 @@ public class ShoppingCartPresenter<V extends IShoppingCartView> extends BasePres
     }
 
     @Override
-    public CartItem getDiscountTotalItem(int discountTotalAmount) {
+    public CartItem getDiscountTotalItem(double discountTotalAmount) {
         CartItem discountTotal = new CartItem();
         discountTotal.setItemId(-1);
         discountTotal.setItemTitle("Discount");

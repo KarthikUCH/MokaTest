@@ -10,9 +10,9 @@ public class CartItem {
     private String itemTitle;
     private String thumbnailUrl;
     private int quantity;
-    private int totalPrice;
+    private double totalPrice;
     private double discount;
-    private long discountRate;
+    private double discountRate;
 
     public CartItem() {
     }
@@ -55,11 +55,11 @@ public class CartItem {
         this.itemTitle = itemTitle;
     }
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 
@@ -71,11 +71,11 @@ public class CartItem {
         this.thumbnailUrl = thumbnailUrl;
     }
 
-    public long getDiscountRate() {
+    public double getDiscountRate() {
         return discountRate;
     }
 
-    public void setDiscountRate(long discountRate) {
+    public void setDiscountRate(double discountRate) {
         this.discountRate = discountRate;
     }
 }

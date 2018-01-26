@@ -11,9 +11,9 @@ public interface IShoppingCartPresenter<V extends IShoppingCartView> extends Mvp
 
     void getCartItems();
 
-    CartItem getInitialTotalItem(int initialTotalAmount);
+    CartItem getInitialTotalItem(double initialTotalAmount);
 
-    CartItem getDiscountTotalItem(int discountTotalAmount);
+    CartItem getDiscountTotalItem(double discountTotalAmount);
 
     void onClickClearButton();
 }

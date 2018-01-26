@@ -13,6 +13,7 @@ public class DbConstants {
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
     private static final String LONG_TYPE = " LONG";
+    private static final String REAL_TYPE = " REAL";
     private static final String AUTO_INCREMENT_TYPE = " AUTOINCREMENT";
     private static final String PRIMARY_KEY = " PRIMARY KEY";
     private static final String COMMA_SEP = ",";
@@ -58,9 +59,9 @@ public class DbConstants {
                     + ShoppingCartTable._ID + INTEGER_TYPE + PRIMARY_KEY + AUTO_INCREMENT_TYPE + COMMA_SEP
                     + ShoppingCartTable.COLUMN_CART_ITEM_ID + INTEGER_TYPE + COMMA_SEP
                     + ShoppingCartTable.COLUMN_CART_ITEM_QUANTITY + INTEGER_TYPE + COMMA_SEP
-                    + ShoppingCartTable.COLUMN_CART_ITEM_TOTAL_PRICE + INTEGER_TYPE + COMMA_SEP
-                    + ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS + LONG_TYPE + COMMA_SEP
-                    + ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNT_RATE + LONG_TYPE + COMMA_SEP
+                    + ShoppingCartTable.COLUMN_CART_ITEM_TOTAL_PRICE + REAL_TYPE + COMMA_SEP
+                    + ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS + REAL_TYPE + COMMA_SEP
+                    + ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNT_RATE + REAL_TYPE + COMMA_SEP
                     + " UNIQUE (" + ShoppingCartTable.COLUMN_CART_ITEM_ID + COMMA_SEP
                     + ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS + ") ON CONFLICT REPLACE)";
 

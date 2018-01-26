@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
     }
 
     @Override
-    public void displayAddToCartDialog(int itemId, String title, int price, int quantity, double discount, boolean editFlag) {
+    public void displayAddToCartDialog(int itemId, String title, double price, int quantity, double discount, boolean editFlag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment prevFragment = fragmentManager.findFragmentByTag(AddToCartDialogFragment.class.getName());

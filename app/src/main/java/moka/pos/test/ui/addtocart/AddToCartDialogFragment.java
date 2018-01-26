@@ -39,9 +39,9 @@ public class AddToCartDialogFragment extends BaseDialogFragment implements IAddT
     private static final String TAG = AddToCartDialogFragment.class.getName();
 
     private static final String ARG_EXTRA_INT_ITEM_ID = "arg_extra_int_item_id_" + TAG;
-    private static final String ARG_EXTRA_INT_ITEM_TITLE = "arg_extra_int_item_title_" + TAG;
-    private static final String ARG_EXTRA_INT_ITEM_PRICE = "arg_extra_int_item_price_" + TAG;
-    private static final String ARG_EXTRA_INT_FLAG_EDIT = "arg_extra_int_flag_edit_" + TAG;
+    private static final String ARG_EXTRA_STRING_ITEM_TITLE = "arg_extra_int_item_title_" + TAG;
+    private static final String ARG_EXTRA_DOUBLE_ITEM_PRICE = "arg_extra_int_item_price_" + TAG;
+    private static final String ARG_EXTRA_BOOLEAN_FLAG_EDIT = "arg_extra_int_flag_edit_" + TAG;
     private static final String ARG_EXTRA_INT_ITEM_QUANTITY = "arg_extra_int_item_quantity_" + TAG;
     private static final String ARG_EXTRA_INT_ITEM_DISCOUNT = "arg_extra_int_item_discount_" + TAG;
 
@@ -67,13 +67,13 @@ public class AddToCartDialogFragment extends BaseDialogFragment implements IAddT
     public AddToCartDialogFragment() {
     }
 
-    public static AddToCartDialogFragment newInstance(int itemId, String itemTitle, int itemPrice, int quantity, double discount, boolean editFlag) {
+    public static AddToCartDialogFragment newInstance(int itemId, String itemTitle, double itemPrice, int quantity, double discount, boolean editFlag) {
         AddToCartDialogFragment dialogFragment = new AddToCartDialogFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_EXTRA_INT_ITEM_ID, itemId);
-        bundle.putString(ARG_EXTRA_INT_ITEM_TITLE, itemTitle);
-        bundle.putInt(ARG_EXTRA_INT_ITEM_PRICE, itemPrice);
-        bundle.putBoolean(ARG_EXTRA_INT_FLAG_EDIT, editFlag);
+        bundle.putString(ARG_EXTRA_STRING_ITEM_TITLE, itemTitle);
+        bundle.putDouble(ARG_EXTRA_DOUBLE_ITEM_PRICE, itemPrice);
+        bundle.putBoolean(ARG_EXTRA_BOOLEAN_FLAG_EDIT, editFlag);
         bundle.putInt(ARG_EXTRA_INT_ITEM_QUANTITY, quantity);
         bundle.putDouble(ARG_EXTRA_INT_ITEM_DISCOUNT, discount);
 
@@ -191,12 +191,12 @@ public class AddToCartDialogFragment extends BaseDialogFragment implements IAddT
 
     @Override
     public String getItemTitle() {
-        return getArguments().getString(ARG_EXTRA_INT_ITEM_TITLE);
+        return getArguments().getString(ARG_EXTRA_STRING_ITEM_TITLE);
     }
 
     @Override
-    public int getItemPrice() {
-        return getArguments().getInt(ARG_EXTRA_INT_ITEM_PRICE);
+    public double getItemPrice() {
+        return getArguments().getDouble(ARG_EXTRA_DOUBLE_ITEM_PRICE);
     }
 
     @Override
@@ -211,7 +211,7 @@ public class AddToCartDialogFragment extends BaseDialogFragment implements IAddT
 
     @Override
     public boolean isEdit() {
-        return getArguments().getBoolean(ARG_EXTRA_INT_FLAG_EDIT, false);
+        return getArguments().getBoolean(ARG_EXTRA_BOOLEAN_FLAG_EDIT, false);
     }
 
     @Override

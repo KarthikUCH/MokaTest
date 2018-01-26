@@ -94,12 +94,12 @@ public class ShoppingCartManager {
     }
 
     @WorkerThread
-    public int getInitialTotal() {
-        int total = 0;
+    public double getInitialTotal() {
+        double total = 0;
         String query = "SELECT SUM(" + ShoppingCartTable.COLUMN_CART_ITEM_TOTAL_PRICE + ") FROM " + Tables.SHOPPING_CART;
         Cursor cursor = mDbHelper.rawQuery(query, null);
         if (cursor.moveToFirst()) {
-            total = cursor.getInt(0);
+            total = cursor.getDouble(0);
         }
         if (cursor != null) {
             cursor.close();
@@ -108,12 +108,12 @@ public class ShoppingCartManager {
     }
 
     @WorkerThread
-    public int getDiscountTotal() {
-        int total = 0;
+    public double getDiscountTotal() {
+        double total = 0;
         String query = "SELECT SUM(" + ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNT_RATE + ") FROM " + Tables.SHOPPING_CART;
         Cursor cursor = mDbHelper.rawQuery(query, null);
         if (cursor.moveToFirst()) {
-            total = cursor.getInt(0);
+            total = cursor.getDouble(0);
         }
         if (cursor != null) {
             cursor.close();

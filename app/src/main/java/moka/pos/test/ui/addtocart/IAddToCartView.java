@@ -12,7 +12,7 @@ public interface IAddToCartView extends MvpView {
 
     String getItemTitle();
 
-    int getItemPrice();
+    double getItemPrice();
 
     int getItemQuantity();
 

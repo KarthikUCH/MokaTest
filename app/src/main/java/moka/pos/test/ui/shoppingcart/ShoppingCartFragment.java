@@ -102,7 +102,7 @@ public class ShoppingCartFragment extends BaseFragment implements IShoppingCartV
     }
 
     @OnClick(R.id.btn_clear)
-    public void onClickClear(View v){
+    public void onClickClear(View v) {
         mShoppingCartPresenter.onClickClearButton();
     }
 
@@ -112,7 +112,7 @@ public class ShoppingCartFragment extends BaseFragment implements IShoppingCartV
         mListener = null;
     }
 
-    public void refreshCartList(){
+    public void refreshCartList() {
         mShoppingCartPresenter.getCartItems();
     }
 
@@ -140,7 +140,7 @@ public class ShoppingCartFragment extends BaseFragment implements IShoppingCartV
     }
 
     @Override
-    public void displayFinalTotalAmount(int total) {
-        tvTotal.setText("$ "+total);
+    public void displayFinalTotalAmount(double total) {
+        tvTotal.setText("$ " + String.format("%.2f", total));
     }
 }

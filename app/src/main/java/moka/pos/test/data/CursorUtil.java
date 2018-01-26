@@ -31,9 +31,9 @@ public class CursorUtil {
 
         item.setItemId(cursor.getInt(cursor.getColumnIndex(ShoppingCartTable.COLUMN_CART_ITEM_ID)));
         item.setQuantity(cursor.getInt(cursor.getColumnIndex(ShoppingCartTable.COLUMN_CART_ITEM_QUANTITY)));
-        item.setTotalPrice(cursor.getInt(cursor.getColumnIndex(ShoppingCartTable.COLUMN_CART_ITEM_TOTAL_PRICE)));
-        item.setDiscount(cursor.getLong(cursor.getColumnIndex(ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS)));
-        item.setDiscountRate(cursor.getLong(cursor.getColumnIndex(ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNT_RATE)));
+        item.setTotalPrice(cursor.getDouble(cursor.getColumnIndex(ShoppingCartTable.COLUMN_CART_ITEM_TOTAL_PRICE)));
+        item.setDiscount(cursor.getDouble(cursor.getColumnIndex(ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS)));
+        item.setDiscountRate(cursor.getDouble(cursor.getColumnIndex(ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNT_RATE)));
         if (joinTable) {
             item.setItemTitle(cursor.getString(cursor.getColumnIndex(ItemsTable.COLUMN_ITEM_TITLE)));
             item.setThumbnailUrl(cursor.getString(cursor.getColumnIndex(ItemsTable.COLUMN_ITEM_THUMBNAIL_URL)));
