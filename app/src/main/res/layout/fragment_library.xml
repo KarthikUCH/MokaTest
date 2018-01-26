@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_margin="@dimen/text_margin"
-            android:src="@drawable/ic_format_list_bulleted_black_24dp" />
+            android:src="@drawable/ic_percent" />
 
         <TextView
             android:id="@+id/tv_title_discount"

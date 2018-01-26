@@ -37,7 +37,7 @@ public class CartItemListAdapter extends RecyclerView.Adapter<CartItemListAdapte
         final CartItem item = mValues.get(position);
 
         if (item.getItemId() == -1) {
-            holder.tvPrice.setText(String.valueOf(item.getTotalPrice()));
+            holder.tvPrice.setText("$ " + String.valueOf(item.getTotalPrice()));
             holder.tvTitle.setText(item.getItemTitle());
             holder.tvQuantity.setText("");
             holder.itemView.setOnClickListener(null);
@@ -45,8 +45,8 @@ public class CartItemListAdapter extends RecyclerView.Adapter<CartItemListAdapte
         }
 
         holder.tvTitle.setText(item.getItemTitle());
-        holder.tvQuantity.setText("X" + item.getQuantity());
-        holder.tvPrice.setText(String.valueOf(item.getTotalPrice()));
+        holder.tvQuantity.setText("x" + item.getQuantity());
+        holder.tvPrice.setText("$ " + String.valueOf(item.getTotalPrice()));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:layout_weight="3"
-        android:drawableLeft="@drawable/ic_format_list_bulleted_black_24dp"
+        android:drawableLeft="@drawable/ic_percent"
         android:drawablePadding="@dimen/text_margin"
         android:ellipsize="end"
         android:maxLines="1"
