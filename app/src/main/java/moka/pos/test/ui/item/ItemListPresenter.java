@@ -2,6 +2,7 @@ package moka.pos.test.ui.item;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -38,6 +39,7 @@ public class ItemListPresenter<V extends IItemListView> extends BasePresenter<V>
 
     @Override
     public void getAllItems() {
+        FetchAllItems();
 
         MokaApiService apiService = mRestServiceFactory.create(MokaApiService.class);
 
@@ -74,6 +76,32 @@ public class ItemListPresenter<V extends IItemListView> extends BasePresenter<V>
                 });
 
 
+    }
+
+    public void FetchAllItems() {
+        Observable.just(mItemsManager.getItems())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<Item>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(List<Item> items) {
+                        getMvpView().onAllItemsSuccess(items);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().onAllItemsFailure(e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override
