@@ -14,6 +14,12 @@ public interface IAddToCartView extends MvpView {
 
     int getItemPrice();
 
+    int getItemQuantity();
+
+    double getItemDiscount();
+
+    boolean isEdit();
+
     double getChosenDiscount();
 
     void setTitle(String title);

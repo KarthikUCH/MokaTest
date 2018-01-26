@@ -36,6 +36,19 @@ public class ShoppingCartManager {
     }
 
     @WorkerThread
+    public int updateCartItem(CartItem item, double previousDiscount) {
+        ContentValues values = new ContentValues();
+        values.put(ShoppingCartTable.COLUMN_CART_ITEM_ID, item.getItemId());
+        values.put(ShoppingCartTable.COLUMN_CART_ITEM_QUANTITY, item.getQuantity());
+        values.put(ShoppingCartTable.COLUMN_CART_ITEM_TOTAL_PRICE, item.getTotalPrice());
+        values.put(ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS, item.getDiscount());
+        values.put(ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNT_RATE, item.getDiscountRate());
+        return mDbHelper.update(Tables.SHOPPING_CART, values
+                , ShoppingCartTable.COLUMN_CART_ITEM_ID + " =? AND " + ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS + "=?"
+                , new String[]{String.valueOf(item.getItemId()), String.valueOf(previousDiscount)});
+    }
+
+    @WorkerThread
     public ArrayList<CartItem> getItemsFromCart() {
         ArrayList<CartItem> items = new ArrayList<>();
 

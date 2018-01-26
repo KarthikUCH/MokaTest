@@ -38,7 +38,8 @@ public class AddToCartDialogPresenter<V extends IAddToCartView> extends BasePres
         mItemPrice = getMvpView().getItemPrice();
 
         getMvpView().setTitle(mItemTitle + " - $" + mItemPrice);
-        onClickIncrement();
+        mQuantity = getMvpView().getItemQuantity();
+        getMvpView().setQuantity(mQuantity);
     }
 
     @Override
@@ -76,9 +77,11 @@ public class AddToCartDialogPresenter<V extends IAddToCartView> extends BasePres
 
                 // Check if item already exists with same discount
                 // if exists merge the mQuantity
-                CartItem existingCartItem = mShoppingCartManager.getItemFormCart(mItemId, discount);
-                if (existingCartItem != null) {
-                    mQuantity += existingCartItem.getQuantity();
+                if (!getMvpView().isEdit()) {
+                    CartItem existingCartItem = mShoppingCartManager.getItemFormCart(mItemId, discount);
+                    if (existingCartItem != null) {
+                        mQuantity += existingCartItem.getQuantity();
+                    }
                 }
 
                 int totalPrice = mQuantity * mItemPrice;
@@ -87,7 +90,11 @@ public class AddToCartDialogPresenter<V extends IAddToCartView> extends BasePres
                 CartItem item = new CartItem(mItemId, mQuantity, discount);
                 item.setTotalPrice(totalPrice);
                 item.setDiscountRate(discountRate);
-                mShoppingCartManager.insertCartItem(item);
+                if (getMvpView().isEdit()) {
+                    mShoppingCartManager.updateCartItem(item, getMvpView().getItemDiscount());
+                } else {
+                    mShoppingCartManager.insertCartItem(item);
+                }
                 return true;
             }
         })

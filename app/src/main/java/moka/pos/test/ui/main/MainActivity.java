@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
     }
 
     @Override
-    public void displayAddToCartDialog(Item item) {
+    public void displayAddToCartDialog(int itemId, String title, int price, int quantity, double discount, boolean editFlag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment prevFragment = fragmentManager.findFragmentByTag(AddToCartDialogFragment.class.getName());
@@ -117,7 +117,7 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
             fragmentTransaction.remove(prevFragment);
         }
         fragmentTransaction.addToBackStack(null);
-        AddToCartDialogFragment.newInstance(item.getId(), item.getTitle(), item.getPrice()).show(fragmentManager, AddToCartDialogFragment.class.getName());
+        AddToCartDialogFragment.newInstance(itemId, title, price, quantity, discount, editFlag).show(fragmentManager, AddToCartDialogFragment.class.getName());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
 
     @Override
     public void onListFragmentInteraction(Item item) {
-        displayAddToCartDialog(item);
+        displayAddToCartDialog(item.getId(), item.getTitle(), item.getPrice(), 1, 0, false);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,7 +152,8 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
 
     @Override
     public void editCartItem(CartItem item) {
-
+        displayAddToCartDialog(item.getItemId(), item.getItemTitle(), item.getTotalPrice() / item.getQuantity()
+                , item.getQuantity(), item.getDiscount(), true);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

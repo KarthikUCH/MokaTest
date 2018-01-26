@@ -17,5 +17,5 @@ public interface IMainView extends MvpView {
 
     void displayShoppingCart();
 
-    void displayAddToCartDialog(Item item);
+    void displayAddToCartDialog(int itemId, String title, int price, int quantity, double discount, boolean editFlag);
 }

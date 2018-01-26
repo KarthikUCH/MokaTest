@@ -14,7 +14,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import moka.pos.test.R;
 import moka.pos.test.network.model.Discount;
-import moka.pos.test.ui.discounts.DiscountListAdapter;
 
 /**
  * Created by karthikeyan on 24/1/18.
@@ -23,11 +22,11 @@ import moka.pos.test.ui.discounts.DiscountListAdapter;
 public class ApplyDiscountListAdapter extends RecyclerView.Adapter<ApplyDiscountListAdapter.ViewHolder> {
 
     private final ArrayList<Discount> mDiscounts;
-    private int mEnabledPosition;
+    private double mEnabledDiscount;
 
-    public ApplyDiscountListAdapter(ArrayList<Discount> mDiscounts, int enabledPosition) {
+    public ApplyDiscountListAdapter(ArrayList<Discount> mDiscounts, double enabledPosition) {
         this.mDiscounts = mDiscounts;
-        this.mEnabledPosition = enabledPosition;
+        this.mEnabledDiscount = enabledPosition;
     }
 
     @Override
@@ -44,15 +43,16 @@ public class ApplyDiscountListAdapter extends RecyclerView.Adapter<ApplyDiscount
 
         holder.switchDiscount.setOnCheckedChangeListener(null);
 
-        holder.switchDiscount.setChecked(mEnabledPosition == position);
+        final double discount = item.getDiscount();
+        holder.switchDiscount.setChecked(mEnabledDiscount == discount);
 
         holder.switchDiscount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    mEnabledPosition = position;
+                    mEnabledDiscount = discount;
                 } else {
-                    mEnabledPosition = -1;
+                    mEnabledDiscount = -1;
                 }
                 notifyDataSetChanged();
             }
@@ -67,7 +67,7 @@ public class ApplyDiscountListAdapter extends RecyclerView.Adapter<ApplyDiscount
     }
 
     public double getDiscount() {
-        return mEnabledPosition == -1 ? 0 : mDiscounts.get(mEnabledPosition).getDiscount();
+        return mEnabledDiscount == -1 ? 0 : mEnabledDiscount;
     }
 
     public void swapData(ArrayList<Discount> discountList) {
