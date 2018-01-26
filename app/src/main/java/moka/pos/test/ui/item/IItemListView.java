@@ -15,4 +15,6 @@ public interface IItemListView extends MvpView {
     void onAllItemsSuccess(List<Item> itemList);
 
     void onAllItemsFailure(String errorMsg);
+
+    boolean isNetworkConnected();
 }

@@ -41,6 +41,11 @@ public class ItemListPresenter<V extends IItemListView> extends BasePresenter<V>
     public void getAllItems() {
         FetchAllItems();
 
+        if (!getMvpView().isNetworkConnected()) {
+            getMvpView().showToast("No network connection");
+            return;
+        }
+
         MokaApiService apiService = mRestServiceFactory.create(MokaApiService.class);
 
         apiService.getAllItems()

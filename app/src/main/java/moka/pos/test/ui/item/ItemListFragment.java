@@ -19,6 +19,7 @@ import moka.pos.test.R;
 import moka.pos.test.application.ApplicationComponent;
 import moka.pos.test.network.model.Item;
 import moka.pos.test.ui.base.BaseFragment;
+import moka.pos.test.util.AppUtil;
 
 /**
  * A fragment representing a list of Items.
@@ -128,5 +129,10 @@ public class ItemListFragment extends BaseFragment implements IItemListView {
     @Override
     public void onAllItemsFailure(String errorMsg) {
         showToast(errorMsg);
+    }
+
+    @Override
+    public boolean isNetworkConnected() {
+        return AppUtil.isNetworkConnected(getContext());
     }
 }

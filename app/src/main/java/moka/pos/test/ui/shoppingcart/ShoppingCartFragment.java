@@ -32,6 +32,9 @@ public class ShoppingCartFragment extends BaseFragment implements IShoppingCartV
     @BindView(R.id.recycleview_items)
     RecyclerView mRecyclerView;
 
+    @BindView(R.id.tv_no_items)
+    TextView tvNoItems;
+
     @BindView(R.id.tv_total)
     TextView tvTotal;
 
@@ -136,6 +139,7 @@ public class ShoppingCartFragment extends BaseFragment implements IShoppingCartV
 
     @Override
     public void displayCartItems(ArrayList<CartItem> items) {
+        tvNoItems.setVisibility(items.size() == 0 ? View.VISIBLE : View.GONE);
         mAdapter.swapData(items);
     }
 

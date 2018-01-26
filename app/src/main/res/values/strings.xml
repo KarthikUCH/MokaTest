@@ -10,6 +10,7 @@
     <string name="text_lbl_price">Price</string>
     <string name="text_lbl_discount">Discount</string>
     <string name="text_lbl_quantity">Quantity</string>
+    <string name="text_lbl_no_items">no items</string>
 
     <!-- LIBRARY -->
 
