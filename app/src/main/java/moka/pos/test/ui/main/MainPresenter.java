@@ -9,30 +9,21 @@ import moka.pos.test.ui.base.BasePresenter;
 public class MainPresenter<V extends IMainView> extends BasePresenter<V> implements IMainPresenter<V> {
 
     @Override
-    public void attachView(V view) {
-        super.attachView(view);
-
-        getMvpView().displayLibrary();
-        getMvpView().displayShoppingCart();
-    }
-
-    @Override
     public void onClickDiscounts() {
+        getMvpView().showToast("Displaying Discount List");
         getMvpView().displayDiscountList();
     }
 
     @Override
     public void onClickAllItems() {
+        getMvpView().showToast("Displaying All Items List");
         getMvpView().displayAllItems();
     }
 
     @Override
     public void onClickToolbarBack() {
+        getMvpView().showToast("Displaying Library List");
         getMvpView().displayLibrary();
     }
 
-    @Override
-    public void detachView() {
-        super.detachView();
-    }
 }

@@ -13,9 +13,15 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
         mMvpView = view;
     }
 
+    /**
+     * Don't detach the ViewModel from Presenter, Since Presenter can holds reference to view model
+     * irrespective of Activity/Fragment lifecycle
+     */
     @Override
     public void detachView() {
-        mMvpView = null;
+        if (!(mMvpView instanceof BaseViewModel)) {
+            mMvpView = null;
+        }
     }
 
     @Override
