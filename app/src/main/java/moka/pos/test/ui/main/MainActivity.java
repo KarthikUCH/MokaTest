@@ -68,7 +68,7 @@ public class MainActivity extends BaseVMActivity<MainViewModel> implements ItemL
     @Override
     protected void subscribeViewModel() {
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        final Observer<MainViewModel.ToDoStatus> mMainVmDataObserver = new Observer<MainViewModel.ToDoStatus>() {
+        final Observer<MainViewModel.ToDoStatus> mainVmDataObserver = new Observer<MainViewModel.ToDoStatus>() {
             @Override
             public void onChanged(@Nullable MainViewModel.ToDoStatus toDoStatus) {
                 switch (toDoStatus) {
@@ -86,7 +86,7 @@ public class MainActivity extends BaseVMActivity<MainViewModel> implements ItemL
             }
         };
 
-        mMainViewModel.getToDoStatus().observe(this, mMainVmDataObserver);
+        mMainViewModel.getToDoStatus().observe(this, mainVmDataObserver);
 
         super.subscribeViewModel();
     }
