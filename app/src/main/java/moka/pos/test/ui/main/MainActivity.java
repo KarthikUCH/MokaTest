@@ -1,6 +1,9 @@
 package moka.pos.test.ui.main;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -18,15 +21,17 @@ import moka.pos.test.application.ApplicationComponent;
 import moka.pos.test.data.model.CartItem;
 import moka.pos.test.network.model.Item;
 import moka.pos.test.ui.addtocart.AddToCartDialogFragment;
-import moka.pos.test.ui.base.BaseActivity;
+import moka.pos.test.ui.base.BaseVMActivity;
 import moka.pos.test.ui.discounts.DiscountListFragment;
 import moka.pos.test.ui.item.ItemListFragment;
 import moka.pos.test.ui.library.LibraryFragment;
 import moka.pos.test.ui.shoppingcart.ShoppingCartFragment;
 
-public class MainActivity extends BaseActivity implements IMainView, ItemListFragment.OnAllItemClickListener,
+public class MainActivity extends BaseVMActivity<MainViewModel> implements ItemListFragment.OnAllItemClickListener,
         LibraryFragment.OnLibraryInteractionListener, ShoppingCartFragment.OnCartItemInteractionListener,
         AddToCartDialogFragment.OnItemAddedToCartListener {
+
+    private MainViewModel mMainViewModel;
 
     @BindView(R.id.img_back)
     ImageView imgBack;
@@ -44,7 +49,46 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
 
         ButterKnife.bind(this);
 
-        mMainPresenter.attachView(this);
+        init();
+    }
+
+    private void init() {
+        mMainPresenter.attachView(mMainViewModel);
+
+        displayLibrary();
+        displayShoppingCart();
+    }
+
+
+    @Override
+    public MainViewModel getViewModel() {
+        return mMainViewModel;
+    }
+
+    @Override
+    protected void subscribeViewModel() {
+        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        final Observer<MainViewModel.ToDoStatus> mMainVmDataObserver = new Observer<MainViewModel.ToDoStatus>() {
+            @Override
+            public void onChanged(@Nullable MainViewModel.ToDoStatus toDoStatus) {
+                switch (toDoStatus) {
+                    case DISPLAY_LIBRARY:
+                        displayLibrary();
+                        break;
+                    case DISPLAY_ALL_ITEMS:
+                        displayAllItems();
+                        break;
+                    case DISPLAY_DISCOUNT_LIST:
+                        displayDiscountList();
+                        break;
+                }
+
+            }
+        };
+
+        mMainViewModel.getToDoStatus().observe(this, mMainVmDataObserver);
+
+        super.subscribeViewModel();
     }
 
     @Override
@@ -55,7 +99,6 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMainPresenter.detachView();
     }
 
     @OnClick(R.id.img_back)
@@ -67,7 +110,6 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
     //////////////                  METHODS FROM @IMainView INTERFACE                 //////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @Override
     public void displayLibrary() {
         imgBack.setVisibility(View.GONE);
         tvLibTitle.setText(getString(R.string.text_title_library));
@@ -78,7 +120,6 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
         fragmentTransaction.commit();
     }
 
-    @Override
     public void displayAllItems() {
         imgBack.setVisibility(View.VISIBLE);
         tvLibTitle.setText(getString(R.string.text_title_all_items));
@@ -89,7 +130,6 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
         fragmentTransaction.commit();
     }
 
-    @Override
     public void displayDiscountList() {
         imgBack.setVisibility(View.VISIBLE);
         tvLibTitle.setText(getString(R.string.text_title_discounts));
@@ -100,7 +140,6 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
         fragmentTransaction.commit();
     }
 
-    @Override
     public void displayShoppingCart() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -108,7 +147,6 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
         fragmentTransaction.commit();
     }
 
-    @Override
     public void displayAddToCartDialog(int itemId, String title, double price, int quantity, double discount, boolean editFlag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
