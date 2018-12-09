@@ -1,7 +1,10 @@
 package moka.pos.test.ui.discounts;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +28,9 @@ import moka.pos.test.ui.base.BaseFragment;
  * Use the {@link DiscountListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DiscountListFragment extends BaseFragment implements IDiscountView {
+public class DiscountListFragment extends BaseFragment {
+
+    private DiscountViewModel mDiscountViewModel;
 
     @BindView(R.id.recycleview_discounts)
     RecyclerView mRecyclerView;
@@ -69,14 +74,32 @@ public class DiscountListFragment extends BaseFragment implements IDiscountView 
         ButterKnife.bind(this, view);
 
         setAdapter();
-        mDiscountPresenter.attachView(this);
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        subscribeViewModel();
+        mDiscountPresenter.attachView(mDiscountViewModel);
+    }
+
+    protected void subscribeViewModel() {
+        mDiscountViewModel = ViewModelProviders.of(this).get(DiscountViewModel.class);
+
+        final Observer<ArrayList<Discount>> discountVmDataObserver = new Observer<ArrayList<Discount>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<Discount> discounts) {
+                displayDiscounts(discounts);
+            }
+        };
+
+        mDiscountViewModel.getDiscountListDate().observe(this, discountVmDataObserver);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mDiscountPresenter.detachView();
     }
 
     private void setAdapter() {
@@ -89,7 +112,7 @@ public class DiscountListFragment extends BaseFragment implements IDiscountView 
     //////////////             METHODS FROM @IDiscountView INTERFACE                  //////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    @Override
+
     public void displayDiscounts(ArrayList<Discount> discountList) {
         mAdapter.swapData(discountList);
     }
