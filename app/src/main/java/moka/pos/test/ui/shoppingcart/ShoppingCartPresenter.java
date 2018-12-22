@@ -32,8 +32,8 @@ public class ShoppingCartPresenter<V extends IShoppingCartView> extends BasePres
     }
 
     @Override
-    public void attachView(V view) {
-        super.attachView(view);
+    public void attachViewInteractor(V view) {
+        super.attachViewInteractor(view);
         getCartItems();
     }
 
@@ -73,7 +73,7 @@ public class ShoppingCartPresenter<V extends IShoppingCartView> extends BasePres
 
                     @Override
                     public void onNext(ArrayList<CartItem> items) {
-                        getMvpView().displayCartItems(items);
+                        getViewInteractor().displayCartItems(items);
                     }
 
                     @Override
@@ -84,7 +84,7 @@ public class ShoppingCartPresenter<V extends IShoppingCartView> extends BasePres
                     @Override
                     public void onComplete() {
                         double total = mIntitialTotal - mDiscountTotal;
-                        getMvpView().displayFinalTotalAmount(total);
+                        getViewInteractor().displayFinalTotalAmount(total);
                     }
                 });
     }
@@ -133,16 +133,16 @@ public class ShoppingCartPresenter<V extends IShoppingCartView> extends BasePres
                     public void onComplete() {
                         mIntitialTotal = 0;
                         mDiscountTotal = 0;
-                        getMvpView().displayCartItems(new ArrayList<CartItem>());
-                        getMvpView().displayFinalTotalAmount(0);
+                        getViewInteractor().displayCartItems(new ArrayList<CartItem>());
+                        getViewInteractor().displayFinalTotalAmount(0);
                     }
                 });
 
     }
 
     @Override
-    public void detachView() {
-        super.detachView();
+    public void detachViewInteractor() {
+        super.detachViewInteractor();
         mCompositeDisposable.clear();
     }
 }

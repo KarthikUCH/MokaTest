@@ -30,23 +30,23 @@ public class AddToCartDialogPresenter<V extends IAddToCartView> extends BasePres
     }
 
     @Override
-    public void attachView(V view) {
-        super.attachView(view);
+    public void attachViewInteractor(V view) {
+        super.attachViewInteractor(view);
 
-        mItemId = getMvpView().getItemId();
-        mItemTitle = getMvpView().getItemTitle();
-        mItemPrice = getMvpView().getItemPrice();
+        mItemId = getViewInteractor().getItemId();
+        mItemTitle = getViewInteractor().getItemTitle();
+        mItemPrice = getViewInteractor().getItemPrice();
 
-        getMvpView().setTitle(mItemTitle + " - $" + mItemPrice);
-        mQuantity = getMvpView().getItemQuantity();
-        getMvpView().setQuantity(mQuantity);
+        getViewInteractor().setTitle(mItemTitle + " - $" + mItemPrice);
+        mQuantity = getViewInteractor().getItemQuantity();
+        getViewInteractor().setQuantity(mQuantity);
     }
 
     @Override
     public void onClickIncrement() {
         if (mQuantity < 1000) {
             mQuantity++;
-            getMvpView().setQuantity(mQuantity);
+            getViewInteractor().setQuantity(mQuantity);
         }
     }
 
@@ -54,7 +54,7 @@ public class AddToCartDialogPresenter<V extends IAddToCartView> extends BasePres
     public void onClickDecrement() {
         if (mQuantity > 1) {
             mQuantity--;
-            getMvpView().setQuantity(mQuantity);
+            getViewInteractor().setQuantity(mQuantity);
         }
     }
 
@@ -73,11 +73,11 @@ public class AddToCartDialogPresenter<V extends IAddToCartView> extends BasePres
         Observable.fromCallable(new Callable<Boolean>() {
             @Override
             public Boolean call() throws Exception {
-                double discount = getMvpView().getChosenDiscount();
+                double discount = getViewInteractor().getChosenDiscount();
 
                 // Check if item already exists with same discount
                 // if exists merge the mQuantity
-                if (!getMvpView().isEdit()) {
+                if (!getViewInteractor().isEdit()) {
                     CartItem existingCartItem = mShoppingCartManager.getItemFormCart(mItemId, discount);
                     if (existingCartItem != null) {
                         mQuantity += existingCartItem.getQuantity();
@@ -90,8 +90,8 @@ public class AddToCartDialogPresenter<V extends IAddToCartView> extends BasePres
                 CartItem item = new CartItem(mItemId, mQuantity, discount);
                 item.setTotalPrice(totalPrice);
                 item.setDiscountRate(discountRate);
-                if (getMvpView().isEdit()) {
-                    mShoppingCartManager.updateCartItem(item, getMvpView().getItemDiscount());
+                if (getViewInteractor().isEdit()) {
+                    mShoppingCartManager.updateCartItem(item, getViewInteractor().getItemDiscount());
                 } else {
                     mShoppingCartManager.insertCartItem(item);
                 }
@@ -114,24 +114,24 @@ public class AddToCartDialogPresenter<V extends IAddToCartView> extends BasePres
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        getMvpView().finishView();
+                        getViewInteractor().finishView();
                     }
 
                     @Override
                     public void onComplete() {
-                        getMvpView().finishView();
-                        getMvpView().addedToCart();
+                        getViewInteractor().finishView();
+                        getViewInteractor().addedToCart();
                     }
                 });
     }
 
     @Override
     public void onClickCancel() {
-        getMvpView().finishView();
+        getViewInteractor().finishView();
     }
 
     @Override
-    public void detachView() {
-        super.detachView();
+    public void detachViewInteractor() {
+        super.detachViewInteractor();
     }
 }

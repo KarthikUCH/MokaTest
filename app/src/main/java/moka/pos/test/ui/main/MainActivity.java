@@ -53,7 +53,7 @@ public class MainActivity extends BaseVMActivity<MainViewModel> implements ItemL
     }
 
     private void init() {
-        mMainPresenter.attachView(mMainViewModel);
+        mMainPresenter.attachViewInteractor(mMainViewModel);
 
         displayLibrary();
         displayShoppingCart();

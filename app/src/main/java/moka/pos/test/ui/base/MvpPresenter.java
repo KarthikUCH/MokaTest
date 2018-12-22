@@ -4,15 +4,13 @@ package moka.pos.test.ui.base;
  * Created by karthikeyan on 23/1/18.
  */
 
-public interface MvpPresenter<V extends MvpView> {
+public interface MvpPresenter<V extends BaseView> {
 
-    void attachView(V view);
+    void attachViewInteractor(V view);
 
-    void detachView();
+    void detachViewInteractor();
 
-    V getMvpView();
+    V getViewInteractor();
 
     boolean isViewAttached();
-
-    void checkViewAttached() throws BasePresenter.MvpViewNotAttachedException;
 }

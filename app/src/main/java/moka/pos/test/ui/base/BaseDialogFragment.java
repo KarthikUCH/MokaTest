@@ -19,7 +19,7 @@ import moka.pos.test.application.MokaApplication;
  * Created by karthikeyan on 24/1/18.
  */
 
-public abstract class BaseDialogFragment extends DialogFragment implements MvpView {
+public abstract class BaseDialogFragment extends DialogFragment implements BaseView {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

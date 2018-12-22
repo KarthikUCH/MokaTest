@@ -1,7 +1,6 @@
 package moka.pos.test.ui.addtocart;
 
 import moka.pos.test.ui.base.MvpPresenter;
-import moka.pos.test.ui.base.MvpView;
 
 /**
  * Created by karthikeyan on 24/1/18.

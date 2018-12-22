@@ -81,7 +81,7 @@ public class DiscountListFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         subscribeViewModel();
-        mDiscountPresenter.attachView(mDiscountViewModel);
+        mDiscountPresenter.attachViewInteractor(mDiscountViewModel);
     }
 
     protected void subscribeViewModel() {

@@ -8,7 +8,7 @@ import android.support.annotation.MainThread;
 /**
  * Created by raju on 8/12/18.
  */
-public class BaseViewModel extends ViewModel implements MvpView {
+public class BaseViewModel extends ViewModel implements BaseView {
     private MutableLiveData<EventData> mEventLiveData = new MutableLiveData<>();
 
     public LiveData<EventData> getmEventLiveData() {

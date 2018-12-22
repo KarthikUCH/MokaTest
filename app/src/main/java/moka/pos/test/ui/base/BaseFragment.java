@@ -12,7 +12,7 @@ import moka.pos.test.application.MokaApplication;
  * Created by karthikeyan on 23/1/18.
  */
 
-public abstract class BaseFragment extends Fragment implements MvpView {
+public abstract class BaseFragment extends Fragment implements BaseView {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

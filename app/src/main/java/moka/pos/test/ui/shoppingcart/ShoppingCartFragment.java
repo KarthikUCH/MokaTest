@@ -76,7 +76,7 @@ public class ShoppingCartFragment extends BaseFragment implements IShoppingCartV
         ButterKnife.bind(this, view);
 
         setAdapter();
-        mShoppingCartPresenter.attachView(this);
+        mShoppingCartPresenter.attachViewInteractor(this);
 
         return view;
     }
@@ -90,7 +90,7 @@ public class ShoppingCartFragment extends BaseFragment implements IShoppingCartV
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mShoppingCartPresenter.detachView();
+        mShoppingCartPresenter.detachViewInteractor();
     }
 
     @Override
