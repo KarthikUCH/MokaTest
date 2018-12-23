@@ -2,7 +2,6 @@ package moka.pos.test.ui.discounts;
 
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,16 +20,15 @@ import butterknife.ButterKnife;
 import moka.pos.test.R;
 import moka.pos.test.application.ApplicationComponent;
 import moka.pos.test.network.model.Discount;
-import moka.pos.test.ui.base.BaseFragment;
+import moka.pos.test.ui.base.vm.BaseVmFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DiscountListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DiscountListFragment extends BaseFragment {
+public class DiscountListFragment extends BaseVmFragment<DiscountViewModel> {
 
-    private DiscountViewModel mDiscountViewModel;
 
     @BindView(R.id.recycleview_discounts)
     RecyclerView mRecyclerView;
@@ -80,12 +78,12 @@ public class DiscountListFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        subscribeViewModel();
-        mDiscountPresenter.attachViewInteractor(mDiscountViewModel);
+        mDiscountPresenter.attachViewInteractor(mViewModel);
     }
 
-    protected void subscribeViewModel() {
-        mDiscountViewModel = ViewModelProviders.of(this).get(DiscountViewModel.class);
+    @Override
+    protected void observeViewModel() {
+        super.observeViewModel();
 
         final Observer<ArrayList<Discount>> discountVmDataObserver = new Observer<ArrayList<Discount>>() {
             @Override
@@ -94,7 +92,7 @@ public class DiscountListFragment extends BaseFragment {
             }
         };
 
-        mDiscountViewModel.getDiscountListDate().observe(this, discountVmDataObserver);
+        mViewModel.getDiscountListDate().observe(this, discountVmDataObserver);
     }
 
     @Override

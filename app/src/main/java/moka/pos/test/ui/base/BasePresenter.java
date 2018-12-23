@@ -1,5 +1,7 @@
 package moka.pos.test.ui.base;
 
+import moka.pos.test.ui.base.vm.BaseViewModel;
+
 /**
  * Created by karthikeyan on 23/1/18.
  */

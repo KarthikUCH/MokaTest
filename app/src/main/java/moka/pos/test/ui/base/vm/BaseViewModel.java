@@ -1,9 +1,11 @@
-package moka.pos.test.ui.base;
+package moka.pos.test.ui.base.vm;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.MainThread;
+
+import moka.pos.test.ui.base.BaseView;
 
 /**
  * Created by raju on 8/12/18.
@@ -11,7 +13,7 @@ import android.support.annotation.MainThread;
 public class BaseViewModel extends ViewModel implements BaseView {
     private MutableLiveData<EventData> mEventLiveData = new MutableLiveData<>();
 
-    public LiveData<EventData> getmEventLiveData() {
+    public LiveData<EventData> getEventLiveData() {
         return mEventLiveData;
     }
 
@@ -31,28 +33,3 @@ public class BaseViewModel extends ViewModel implements BaseView {
 }
 
 
-class EventData {
-    enum Event {SHOW_TOAST, SHOW_LOADING, HIDE_LOADING, SHOW_DIALOG, FINISH}
-
-    public EventData(Event event, String title, String message) {
-        this.event = event;
-        this.title = title;
-        this.message = message;
-    }
-
-    public Event event;
-    public String title;
-    public String message;
-
-    public Event getEvent() {
-        return event;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-}
