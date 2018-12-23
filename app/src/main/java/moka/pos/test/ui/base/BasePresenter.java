@@ -4,12 +4,12 @@ package moka.pos.test.ui.base;
  * Created by karthikeyan on 23/1/18.
  */
 
-public class BasePresenter<V extends BaseView> implements MvpPresenter<V> {
+public class BasePresenter<VI extends BaseView> implements MvpPresenter<VI> {
 
-    private V mViewInteractor;
+    private VI mViewInteractor;
 
     @Override
-    public void attachViewInteractor(V view) {
+    public void attachViewInteractor(VI view) {
         mViewInteractor = view;
     }
 
@@ -25,7 +25,7 @@ public class BasePresenter<V extends BaseView> implements MvpPresenter<V> {
     }
 
     @Override
-    public V getViewInteractor() {
+    public VI getViewInteractor() {
         return mViewInteractor;
     }
 

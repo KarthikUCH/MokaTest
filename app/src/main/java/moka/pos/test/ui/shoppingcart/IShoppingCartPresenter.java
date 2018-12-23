@@ -7,7 +7,7 @@ import moka.pos.test.ui.base.MvpPresenter;
  * Created by karthikeyan on 25/1/18.
  */
 
-public interface IShoppingCartPresenter<V extends IShoppingCartView> extends MvpPresenter<V> {
+public interface IShoppingCartPresenter<VI extends IShoppingCartView> extends MvpPresenter<VI> {
 
     void getCartItems();
 

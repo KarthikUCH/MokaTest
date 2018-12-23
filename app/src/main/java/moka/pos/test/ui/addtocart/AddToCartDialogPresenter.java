@@ -15,7 +15,7 @@ import moka.pos.test.ui.base.BasePresenter;
  * Created by karthikeyan on 24/1/18.
  */
 
-public class AddToCartDialogPresenter<V extends IAddToCartView> extends BasePresenter<V> implements IAddToCartPresenter<V> {
+public class AddToCartDialogPresenter<VI extends IAddToCartView> extends BasePresenter<VI> implements IAddToCartPresenter<VI> {
 
     private int mItemId;
     private String mItemTitle;
@@ -30,7 +30,7 @@ public class AddToCartDialogPresenter<V extends IAddToCartView> extends BasePres
     }
 
     @Override
-    public void attachViewInteractor(V view) {
+    public void attachViewInteractor(VI view) {
         super.attachViewInteractor(view);
 
         mItemId = getViewInteractor().getItemId();

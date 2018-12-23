@@ -18,7 +18,7 @@ import moka.pos.test.ui.base.BasePresenter;
  * Created by karthikeyan on 25/1/18.
  */
 
-public class ShoppingCartPresenter<V extends IShoppingCartView> extends BasePresenter<V> implements IShoppingCartPresenter<V> {
+public class ShoppingCartPresenter<VI extends IShoppingCartView> extends BasePresenter<VI> implements IShoppingCartPresenter<VI> {
 
     private double mIntitialTotal = 0;
     private double mDiscountTotal = 0;
@@ -32,7 +32,7 @@ public class ShoppingCartPresenter<V extends IShoppingCartView> extends BasePres
     }
 
     @Override
-    public void attachViewInteractor(V view) {
+    public void attachViewInteractor(VI view) {
         super.attachViewInteractor(view);
         getCartItems();
     }

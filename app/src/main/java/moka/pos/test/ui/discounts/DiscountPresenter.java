@@ -9,10 +9,10 @@ import moka.pos.test.ui.base.BasePresenter;
  * Created by karthikeyan on 24/1/18.
  */
 
-public class DiscountPresenter<V extends IDiscountView> extends BasePresenter<V> implements IDiscountPresenter<V> {
+public class DiscountPresenter<VI extends IDiscountView> extends BasePresenter<VI> implements IDiscountPresenter<VI> {
 
     @Override
-    public void attachViewInteractor(V view) {
+    public void attachViewInteractor(VI view) {
         super.attachViewInteractor(view);
         getDiscounts();
     }

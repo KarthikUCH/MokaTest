@@ -19,7 +19,7 @@ import moka.pos.test.ui.base.BasePresenter;
  * Created by karthikeyan on 23/1/18.
  */
 
-public class ItemListPresenter<V extends IItemListView> extends BasePresenter<V> implements IItemListPresenter<V> {
+public class ItemListPresenter<VI extends IItemListView> extends BasePresenter<VI> implements IItemListPresenter<VI> {
 
     private final RestServiceFactory mRestServiceFactory;
     private final ItemsManager mItemsManager;
@@ -32,7 +32,7 @@ public class ItemListPresenter<V extends IItemListView> extends BasePresenter<V>
     }
 
     @Override
-    public void attachViewInteractor(V view) {
+    public void attachViewInteractor(VI view) {
         super.attachViewInteractor(view);
         getAllItems();
     }

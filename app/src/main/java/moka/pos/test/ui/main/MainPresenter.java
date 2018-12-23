@@ -6,7 +6,7 @@ import moka.pos.test.ui.base.BasePresenter;
  * Created by karthikeyan on 24/1/18.
  */
 
-public class MainPresenter<V extends IMainView> extends BasePresenter<V> implements IMainPresenter<V> {
+public class MainPresenter<VI extends IMainView> extends BasePresenter<VI> implements IMainPresenter<VI> {
 
     @Override
     public void onClickDiscounts() {
