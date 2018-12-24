@@ -1,13 +1,12 @@
 package moka.pos.test.ui.addtocart;
 
 import moka.pos.test.ui.base.MvpPresenter;
-import moka.pos.test.ui.base.MvpView;
 
 /**
  * Created by karthikeyan on 24/1/18.
  */
 
-public interface IAddToCartPresenter<V extends IAddToCartView> extends MvpPresenter<V> {
+public interface IAddToCartPresenter<VI extends IAddToCartView> extends MvpPresenter<VI> {
 
     void onClickIncrement();
 

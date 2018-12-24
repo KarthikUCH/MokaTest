@@ -1,13 +1,12 @@
 package moka.pos.test.ui.main;
 
-import moka.pos.test.network.model.Item;
-import moka.pos.test.ui.base.MvpView;
+import moka.pos.test.ui.base.BaseView;
 
 /**
  * Created by karthikeyan on 24/1/18.
  */
 
-public interface IMainView extends MvpView {
+public interface IMainView extends BaseView {
 
     void displayLibrary();
 

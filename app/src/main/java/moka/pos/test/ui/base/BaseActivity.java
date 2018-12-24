@@ -1,7 +1,6 @@
 package moka.pos.test.ui.base;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -13,7 +12,7 @@ import moka.pos.test.application.MokaApplication;
  * Created by karthikeyan on 23/1/18.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements MvpView {
+public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
 
     @Override

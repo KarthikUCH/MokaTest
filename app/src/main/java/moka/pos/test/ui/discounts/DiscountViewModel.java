@@ -6,7 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 
 import moka.pos.test.network.model.Discount;
-import moka.pos.test.ui.base.BaseViewModel;
+import moka.pos.test.ui.base.vm.BaseViewModel;
 
 /**
  * Created by raju on 9/12/18.

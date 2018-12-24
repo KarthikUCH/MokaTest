@@ -1,16 +1,18 @@
 package moka.pos.test.ui.base;
 
+import moka.pos.test.ui.base.vm.BaseViewModel;
+
 /**
  * Created by karthikeyan on 23/1/18.
  */
 
-public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
+public class BasePresenter<VI extends BaseView> implements MvpPresenter<VI> {
 
-    private V mMvpView;
+    private VI mViewInteractor;
 
     @Override
-    public void attachView(V view) {
-        mMvpView = view;
+    public void attachViewInteractor(VI view) {
+        mViewInteractor = view;
     }
 
     /**
@@ -18,30 +20,19 @@ public class BasePresenter<V extends MvpView> implements MvpPresenter<V> {
      * irrespective of Activity/Fragment lifecycle
      */
     @Override
-    public void detachView() {
-        if (!(mMvpView instanceof BaseViewModel)) {
-            mMvpView = null;
+    public void detachViewInteractor() {
+        if (!(mViewInteractor instanceof BaseViewModel)) {
+            mViewInteractor = null;
         }
     }
 
     @Override
-    public V getMvpView() {
-        checkViewAttached();
-        return mMvpView;
+    public VI getViewInteractor() {
+        return mViewInteractor;
     }
 
     public boolean isViewAttached() {
-        return mMvpView != null;
+        return mViewInteractor != null;
     }
 
-    public void checkViewAttached() {
-        if (!isViewAttached()) throw new MvpViewNotAttachedException();
-    }
-
-    public static class MvpViewNotAttachedException extends RuntimeException {
-        public MvpViewNotAttachedException() {
-            super("Please call Presenter.attachView(MvpView) before" +
-                    " requesting data to the Presenter");
-        }
-    }
 }

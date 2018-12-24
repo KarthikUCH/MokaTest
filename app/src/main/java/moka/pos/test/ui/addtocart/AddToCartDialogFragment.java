@@ -99,8 +99,8 @@ public class AddToCartDialogFragment extends BaseDialogFragment implements IAddT
 
         setAdapter();
         setEditTextQuantity();
-        mAddToCartPresenter.attachView(this);
-        mDiscountPresenter.attachView(this);
+        mAddToCartPresenter.attachViewInteractor(this);
+        mDiscountPresenter.attachViewInteractor(this);
         return view;
     }
 
@@ -144,8 +144,8 @@ public class AddToCartDialogFragment extends BaseDialogFragment implements IAddT
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mAddToCartPresenter.detachView();
-        mDiscountPresenter.detachView();
+        mAddToCartPresenter.detachViewInteractor();
+        mDiscountPresenter.detachViewInteractor();
     }
 
     @OnClick({R.id.btn_increase, R.id.btn_decrease})

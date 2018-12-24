@@ -1,26 +1,36 @@
-package moka.pos.test.ui.base;
+package moka.pos.test.ui.base.vm;
 
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import java.lang.reflect.ParameterizedType;
+
 import moka.pos.test.application.ApplicationComponent;
+import moka.pos.test.ui.base.BaseActivity;
 
 /**
  * Created by raju on 8/12/18.
  */
-public abstract class BaseVMActivity<VM extends BaseViewModel> extends BaseActivity {
+public abstract class BaseVmActivity<VM extends BaseViewModel> extends BaseActivity {
 
-    private VM mViewModel;
+    protected VM mViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        subscribeViewModel();
+        initViewModel();
+        observeViewModel();
     }
 
-    protected void subscribeViewModel() {
-        getViewModel().getmEventLiveData().observe(this, new Observer<EventData>() {
+    private void initViewModel() {
+        mViewModel = ViewModelProviders.of(this).get(getViewModelClass());
+    }
+
+    protected void observeViewModel() {
+
+        mViewModel.getEventLiveData().observe(this, new Observer<EventData>() {
             @Override
             public void onChanged(@Nullable EventData eventData) {
                 switch (eventData.event) {
@@ -49,7 +59,10 @@ public abstract class BaseVMActivity<VM extends BaseViewModel> extends BaseActiv
 
     }
 
-    public abstract VM getViewModel();
+    private Class<VM> getViewModelClass() {
+        return (Class<VM>) ((ParameterizedType) getClass()
+                .getGenericSuperclass()).getActualTypeArguments()[0];
+    }
 
     private void showToast(EventData eventData) {
         showToast(eventData.getMessage());

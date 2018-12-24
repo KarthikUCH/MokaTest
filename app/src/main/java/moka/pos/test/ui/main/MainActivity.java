@@ -1,7 +1,6 @@
 package moka.pos.test.ui.main;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,17 +20,15 @@ import moka.pos.test.application.ApplicationComponent;
 import moka.pos.test.data.model.CartItem;
 import moka.pos.test.network.model.Item;
 import moka.pos.test.ui.addtocart.AddToCartDialogFragment;
-import moka.pos.test.ui.base.BaseVMActivity;
+import moka.pos.test.ui.base.vm.BaseVmActivity;
 import moka.pos.test.ui.discounts.DiscountListFragment;
 import moka.pos.test.ui.item.ItemListFragment;
 import moka.pos.test.ui.library.LibraryFragment;
 import moka.pos.test.ui.shoppingcart.ShoppingCartFragment;
 
-public class MainActivity extends BaseVMActivity<MainViewModel> implements ItemListFragment.OnAllItemClickListener,
+public class MainActivity extends BaseVmActivity<MainViewModel> implements ItemListFragment.OnAllItemClickListener,
         LibraryFragment.OnLibraryInteractionListener, ShoppingCartFragment.OnCartItemInteractionListener,
         AddToCartDialogFragment.OnItemAddedToCartListener {
-
-    private MainViewModel mMainViewModel;
 
     @BindView(R.id.img_back)
     ImageView imgBack;
@@ -53,21 +50,17 @@ public class MainActivity extends BaseVMActivity<MainViewModel> implements ItemL
     }
 
     private void init() {
-        mMainPresenter.attachView(mMainViewModel);
+        mMainPresenter.attachViewInteractor(mViewModel);
 
         displayLibrary();
         displayShoppingCart();
     }
 
-
     @Override
-    public MainViewModel getViewModel() {
-        return mMainViewModel;
-    }
+    protected void observeViewModel() {
 
-    @Override
-    protected void subscribeViewModel() {
-        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        super.observeViewModel();
+
         final Observer<MainViewModel.ToDoStatus> mainVmDataObserver = new Observer<MainViewModel.ToDoStatus>() {
             @Override
             public void onChanged(@Nullable MainViewModel.ToDoStatus toDoStatus) {
@@ -86,9 +79,7 @@ public class MainActivity extends BaseVMActivity<MainViewModel> implements ItemL
             }
         };
 
-        mMainViewModel.getToDoStatus().observe(this, mainVmDataObserver);
-
-        super.subscribeViewModel();
+        mViewModel.getToDoStatus().observe(this, mainVmDataObserver);
     }
 
     @Override

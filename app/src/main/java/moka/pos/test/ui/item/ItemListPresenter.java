@@ -19,7 +19,7 @@ import moka.pos.test.ui.base.BasePresenter;
  * Created by karthikeyan on 23/1/18.
  */
 
-public class ItemListPresenter<V extends IItemListView> extends BasePresenter<V> implements IItemListPresenter<V> {
+public class ItemListPresenter<VI extends IItemListView> extends BasePresenter<VI> implements IItemListPresenter<VI> {
 
     private final RestServiceFactory mRestServiceFactory;
     private final ItemsManager mItemsManager;
@@ -32,8 +32,8 @@ public class ItemListPresenter<V extends IItemListView> extends BasePresenter<V>
     }
 
     @Override
-    public void attachView(V view) {
-        super.attachView(view);
+    public void attachViewInteractor(VI view) {
+        super.attachViewInteractor(view);
         getAllItems();
     }
 
@@ -41,8 +41,8 @@ public class ItemListPresenter<V extends IItemListView> extends BasePresenter<V>
     public void getAllItems() {
         FetchAllItems();
 
-        if (!getMvpView().isNetworkConnected()) {
-            getMvpView().showToast("No network connection");
+        if (!getViewInteractor().isNetworkConnected()) {
+            getViewInteractor().showToast("No network connection");
             return;
         }
 
@@ -66,12 +66,12 @@ public class ItemListPresenter<V extends IItemListView> extends BasePresenter<V>
 
                     @Override
                     public void onNext(List<Item> items) {
-                        getMvpView().onAllItemsSuccess(items);
+                        getViewInteractor().onAllItemsSuccess(items);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        getMvpView().onAllItemsFailure(e.getMessage());
+                        getViewInteractor().onAllItemsFailure(e.getMessage());
                     }
 
                     @Override
@@ -94,12 +94,12 @@ public class ItemListPresenter<V extends IItemListView> extends BasePresenter<V>
 
                     @Override
                     public void onNext(List<Item> items) {
-                        getMvpView().onAllItemsSuccess(items);
+                        getViewInteractor().onAllItemsSuccess(items);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        getMvpView().onAllItemsFailure(e.getMessage());
+                        getViewInteractor().onAllItemsFailure(e.getMessage());
                     }
 
                     @Override
@@ -110,8 +110,8 @@ public class ItemListPresenter<V extends IItemListView> extends BasePresenter<V>
     }
 
     @Override
-    public void detachView() {
-        super.detachView();
+    public void detachViewInteractor() {
+        super.detachViewInteractor();
         mCompositeDisposable.clear();
     }
 }

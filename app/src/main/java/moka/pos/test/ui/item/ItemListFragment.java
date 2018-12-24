@@ -68,14 +68,14 @@ public class ItemListFragment extends BaseFragment implements IItemListView {
         ButterKnife.bind(this, view);
 
         setAdapter();
-        mItemListPresenter.attachView(this);
+        mItemListPresenter.attachViewInteractor(this);
         return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mItemListPresenter.detachView();
+        mItemListPresenter.detachViewInteractor();
     }
 
     private void setAdapter() {

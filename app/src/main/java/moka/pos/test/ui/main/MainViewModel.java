@@ -3,7 +3,7 @@ package moka.pos.test.ui.main;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
-import moka.pos.test.ui.base.BaseViewModel;
+import moka.pos.test.ui.base.vm.BaseViewModel;
 
 /**
  * Created by raju on 8/12/18.

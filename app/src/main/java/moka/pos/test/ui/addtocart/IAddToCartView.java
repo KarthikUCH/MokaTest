@@ -1,12 +1,12 @@
 package moka.pos.test.ui.addtocart;
 
-import moka.pos.test.ui.base.MvpView;
+import moka.pos.test.ui.base.BaseView;
 
 /**
  * Created by karthikeyan on 24/1/18.
  */
 
-public interface IAddToCartView extends MvpView {
+public interface IAddToCartView extends BaseView {
 
     int getItemId();
 
