@@ -13,6 +13,18 @@ public class Item {
     private String thumbnailUrl;
     private int price;
 
+    public Item() {
+    }
+
+    public Item(int albumId, int id, String title, String url, String thumbnailUrl, int price) {
+        this.albumId = albumId;
+        this.id = id;
+        this.title = title;
+        this.url = url;
+        this.thumbnailUrl = thumbnailUrl;
+        this.price = price;
+    }
+
     public int getAlbumId() {
         return albumId;
     }

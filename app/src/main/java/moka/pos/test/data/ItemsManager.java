@@ -59,5 +59,8 @@ public class ItemsManager {
         return items;
     }
 
-
+    @WorkerThread
+    public int deleteAllItems() {
+        return mDbHelper.delete(Tables.ITEMS, null, null);
+    }
 }
