@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import moka.pos.test.R;
-import moka.pos.test.network.model.Item;
+import moka.pos.test.data.entity.Item;
 import moka.pos.test.ui.item.ItemListFragment.OnAllItemClickListener;
 
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ViewHolder> {

@@ -1,6 +1,8 @@
 package moka.pos.test.application;
 
 import android.app.Application;
+import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import javax.inject.Singleton;
@@ -10,6 +12,7 @@ import dagger.Provides;
 import moka.pos.test.data.DbManager;
 import moka.pos.test.data.ItemsManager;
 import moka.pos.test.data.ShoppingCartManager;
+import moka.pos.test.data.room.MokaDatabase;
 import moka.pos.test.network.RestServiceFactory;
 import moka.pos.test.ui.addtocart.AddToCartDialogPresenter;
 import moka.pos.test.ui.addtocart.IAddToCartPresenter;
@@ -42,7 +45,7 @@ public class ApplicationModule {
     }
 
     @Provides
-    SQLiteDatabase providesSqLiteDatabase() {
+    SupportSQLiteDatabase providesSqLiteDatabase() {
         return DbManager.getInstance(mApp).getDbHelper();
     }
 
@@ -52,8 +55,8 @@ public class ApplicationModule {
     }
 
     @Provides
-    IItemListPresenter providesItemListPresenter(RestServiceFactory restServiceFactory, ItemsManager itemsManager) {
-        return new ItemListPresenter(restServiceFactory, itemsManager);
+    IItemListPresenter providesItemListPresenter(RestServiceFactory restServiceFactory, MokaDatabase mokaDatabase) {
+        return new ItemListPresenter(restServiceFactory, mokaDatabase);
     }
 
     @Provides
@@ -68,19 +71,24 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    ItemsManager providesItemManager(SQLiteDatabase sqLiteDatabase) {
+    ItemsManager providesItemManager(SupportSQLiteDatabase sqLiteDatabase) {
         return new ItemsManager(sqLiteDatabase);
     }
 
     @Singleton
     @Provides
-    ShoppingCartManager providesShoppingCartManager(SQLiteDatabase sqLiteDatabase) {
+    ShoppingCartManager providesShoppingCartManager(SupportSQLiteDatabase sqLiteDatabase) {
         return new ShoppingCartManager(sqLiteDatabase);
     }
 
     @Provides
     IShoppingCartPresenter providesShoppingCartPresenter(ShoppingCartManager shoppingCartManager) {
         return new ShoppingCartPresenter(shoppingCartManager);
+    }
+
+    @Provides
+    MokaDatabase providesMokaDatabase() {
+        return MokaDatabase.getInstance(mApp);
     }
 
 }

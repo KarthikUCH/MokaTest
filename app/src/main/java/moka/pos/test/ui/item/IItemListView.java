@@ -2,7 +2,8 @@ package moka.pos.test.ui.item;
 
 import java.util.List;
 
-import moka.pos.test.network.model.Item;
+
+import moka.pos.test.data.entity.Item;
 import moka.pos.test.ui.base.BaseView;
 
 /**

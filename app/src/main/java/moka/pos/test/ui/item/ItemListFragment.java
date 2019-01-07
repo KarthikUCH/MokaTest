@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import moka.pos.test.R;
 import moka.pos.test.application.ApplicationComponent;
-import moka.pos.test.network.model.Item;
+import moka.pos.test.data.entity.Item;
 import moka.pos.test.ui.base.BaseFragment;
 import moka.pos.test.util.AppUtil;
 

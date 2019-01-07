@@ -1,8 +1,9 @@
 package moka.pos.test.data;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+
+import moka.pos.test.data.room.MokaDatabase;
 
 /**
  * Created by karthikeyan on 25/1/18.
@@ -14,17 +15,18 @@ public class DbManager {
 
     private Context mContext;
     private static DbManager mDBManager;
-    private SQLiteDatabase mDbHelper;
+    private SupportSQLiteDatabase mDbHelper;
 
     private DbManager() {
     }
 
     private DbManager(Context context) {
         this.mContext = context;
-        mDbHelper = new DateBaseHelper(mContext).getWritableDatabase();
+        //mDbHelper = new DateBaseHelper(mContext).getWritableDatabase();
+        mDbHelper = MokaDatabase.getInstance(context).getOpenHelper().getWritableDatabase();
     }
 
-    public SQLiteDatabase getDbHelper() {
+    public SupportSQLiteDatabase getDbHelper() {
         return mDbHelper;
     }
 
@@ -35,7 +37,7 @@ public class DbManager {
         return mDBManager;
     }
 
-    private class DateBaseHelper extends SQLiteOpenHelper {
+    /*private class DateBaseHelper extends SQLiteOpenHelper {
         public DateBaseHelper(Context context) {
             super(context, DbConstants.DB_NAME, null, DbConstants.DB_VERSION);
         }
@@ -49,8 +51,8 @@ public class DbManager {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-            db.execSQL(DbConstants.SQL_DROP_ITEMS_TABLE);
-            db.execSQL(DbConstants.SQL_DROP_SHOPPING_CART_TABLE);
+            *//*db.execSQL(DbConstants.SQL_DROP_ITEMS_TABLE);
+            db.execSQL(DbConstants.SQL_DROP_SHOPPING_CART_TABLE);*//*
         }
-    }
+    }*/
 }

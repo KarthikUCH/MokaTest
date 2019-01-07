@@ -1,6 +1,7 @@
 package moka.pos.test.ui.item;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -9,10 +10,10 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import moka.pos.test.data.ItemsManager;
+import moka.pos.test.data.entity.Item;
+import moka.pos.test.data.room.MokaDatabase;
 import moka.pos.test.network.MokaApiService;
 import moka.pos.test.network.RestServiceFactory;
-import moka.pos.test.network.model.Item;
 import moka.pos.test.ui.base.BasePresenter;
 
 /**
@@ -22,12 +23,13 @@ import moka.pos.test.ui.base.BasePresenter;
 public class ItemListPresenter<VI extends IItemListView> extends BasePresenter<VI> implements IItemListPresenter<VI> {
 
     private final RestServiceFactory mRestServiceFactory;
-    private final ItemsManager mItemsManager;
+    //private final ItemsManager mItemsManager;
+    private final MokaDatabase mMokaDatabase;
     private final CompositeDisposable mCompositeDisposable;
 
-    public ItemListPresenter(RestServiceFactory mRestServiceFactory, ItemsManager itemsManager) {
+    public ItemListPresenter(RestServiceFactory mRestServiceFactory, MokaDatabase mokaDatabase) {
         this.mRestServiceFactory = mRestServiceFactory;
-        this.mItemsManager = itemsManager;
+        this.mMokaDatabase = mokaDatabase;
         this.mCompositeDisposable = new CompositeDisposable();
     }
 
@@ -52,8 +54,8 @@ public class ItemListPresenter<VI extends IItemListView> extends BasePresenter<V
                 .map(new Function<List<Item>, List<Item>>() {
                     @Override
                     public List<Item> apply(List<Item> items) throws Exception {
-                        mItemsManager.insertItems(items);
-                        return mItemsManager.getItems();
+                        mMokaDatabase.itemDao().insertItems(items);
+                        return mMokaDatabase.itemDao().getItems();
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -84,7 +86,12 @@ public class ItemListPresenter<VI extends IItemListView> extends BasePresenter<V
     }
 
     public void FetchAllItems() {
-        Observable.just(mItemsManager.getItems())
+        Observable.fromCallable(new Callable<List<Item>>() {
+            @Override
+            public List<Item> call() throws Exception {
+                return mMokaDatabase.itemDao().getItems();
+            }
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<List<Item>>() {
                     @Override

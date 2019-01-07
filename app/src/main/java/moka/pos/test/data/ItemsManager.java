@@ -1,5 +1,9 @@
 package moka.pos.test.data;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.arch.persistence.db.SupportSQLiteQuery;
+import android.arch.persistence.db.SupportSQLiteQueryBuilder;
+import android.arch.persistence.db.SupportSQLiteStatement;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -20,9 +24,9 @@ import moka.pos.test.data.DbConstants.ItemsTable;
 
 public class ItemsManager {
 
-    private final SQLiteDatabase mDbHelper;
+    private final SupportSQLiteDatabase mDbHelper;
 
-    public ItemsManager(SQLiteDatabase mDbHelper) {
+    public ItemsManager(SupportSQLiteDatabase mDbHelper) {
         this.mDbHelper = mDbHelper;
     }
 
@@ -30,7 +34,8 @@ public class ItemsManager {
     public void insertItems(List<Item> items) {
         mDbHelper.beginTransaction();
 
-        SQLiteStatement insert = mDbHelper.compileStatement(DbConstants.INSERT_ITEM_QUERY);
+        SupportSQLiteStatement insert = mDbHelper.compileStatement(DbConstants.INSERT_ITEM_QUERY);
+
         for (Item item : items) {
             item.setPrice(item.getId() * AppUtil.getRandomNumber(10, 99));
             insert.bindDouble(1, item.getId());
@@ -48,7 +53,11 @@ public class ItemsManager {
     @WorkerThread
     public ArrayList<Item> getItems() {
         ArrayList<Item> items = new ArrayList<>();
-        Cursor cursor = mDbHelper.query(Tables.ITEMS, null, null, null, null, null, ItemsTable.COLUMN_ITEM_ID + " ASC");
+        //Cursor cursor = mDbHelper.query(Tables.ITEMS, null, null, null, null, null, ItemsTable.COLUMN_ITEM_ID + " ASC");
+        SupportSQLiteQuery query = SupportSQLiteQueryBuilder.builder(Tables.ITEMS)
+                .orderBy(ItemsTable.COLUMN_ITEM_ID + " ASC")
+                .create();
+        Cursor cursor = mDbHelper.query(query);
         while (cursor.moveToNext()) {
             items.add(CursorUtil.getItem(cursor));
         }

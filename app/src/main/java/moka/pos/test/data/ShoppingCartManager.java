@@ -1,5 +1,8 @@
 package moka.pos.test.data;
 
+import android.arch.persistence.db.SupportSQLiteDatabase;
+import android.arch.persistence.db.SupportSQLiteQuery;
+import android.arch.persistence.db.SupportSQLiteQueryBuilder;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,9 +21,9 @@ import moka.pos.test.data.model.CartItem;
 
 public class ShoppingCartManager {
 
-    private final SQLiteDatabase mDbHelper;
+    private final SupportSQLiteDatabase mDbHelper;
 
-    public ShoppingCartManager(SQLiteDatabase mDbHelper) {
+    public ShoppingCartManager(SupportSQLiteDatabase mDbHelper) {
         this.mDbHelper = mDbHelper;
     }
 
@@ -32,7 +35,7 @@ public class ShoppingCartManager {
         values.put(ShoppingCartTable.COLUMN_CART_ITEM_TOTAL_PRICE, item.getTotalPrice());
         values.put(ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS, item.getDiscount());
         values.put(ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNT_RATE, item.getDiscountRate());
-        return mDbHelper.insert(Tables.SHOPPING_CART, null, values);
+        return mDbHelper.insert(Tables.SHOPPING_CART, SQLiteDatabase.CONFLICT_REPLACE, values);
     }
 
     @WorkerThread
@@ -43,9 +46,11 @@ public class ShoppingCartManager {
         values.put(ShoppingCartTable.COLUMN_CART_ITEM_TOTAL_PRICE, item.getTotalPrice());
         values.put(ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS, item.getDiscount());
         values.put(ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNT_RATE, item.getDiscountRate());
-        return mDbHelper.update(Tables.SHOPPING_CART, values
+        return mDbHelper.update(Tables.SHOPPING_CART, SQLiteDatabase.CONFLICT_REPLACE, values
                 , ShoppingCartTable.COLUMN_CART_ITEM_ID + " =? AND " + ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS + "=?"
                 , new String[]{String.valueOf(item.getItemId()), String.valueOf(previousDiscount)});
+
+
     }
 
     @WorkerThread
@@ -59,7 +64,7 @@ public class ShoppingCartManager {
                 + " FROM " + Tables.SHOPPING_CART + " A LEFT JOIN " + Tables.ITEMS + " B ON A.item_id = B.item_id "
                 + " ORDER BY A." + ShoppingCartTable._ID + " ASC";
 
-        Cursor cursor = mDbHelper.rawQuery(query, null);
+        Cursor cursor = mDbHelper.query(query);
 
         while (cursor.moveToNext()) {
             items.add(CursorUtil.getItemFromCart(cursor, true));
@@ -74,9 +79,14 @@ public class ShoppingCartManager {
     @WorkerThread
     public CartItem getItemFormCart(int itemId, double discount) {
         CartItem item = null;
-        Cursor cursor = mDbHelper.query(Tables.SHOPPING_CART, null, ShoppingCartTable.COLUMN_CART_ITEM_ID + " =? AND " + ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS + " =?"
-                , new String[]{String.valueOf(itemId), String.valueOf(discount)}, null, null, null);
+        /*Cursor cursor = mDbHelper.query(Tables.SHOPPING_CART, null, ShoppingCartTable.COLUMN_CART_ITEM_ID + " =? AND " + ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS + " =?"
+                , new String[]{String.valueOf(itemId), String.valueOf(discount)}, null, null, null);*/
 
+        SupportSQLiteQuery query = SupportSQLiteQueryBuilder.builder(Tables.SHOPPING_CART)
+                .selection(ShoppingCartTable.COLUMN_CART_ITEM_ID + " =? AND "
+                        + ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNTS + " =?", new String[]{String.valueOf(itemId), String.valueOf(discount)})
+                .create();
+        Cursor cursor = mDbHelper.query(query);
         if (cursor.moveToFirst()) {
             item = CursorUtil.getItemFromCart(cursor, false);
         }
@@ -97,7 +107,7 @@ public class ShoppingCartManager {
     public double getInitialTotal() {
         double total = 0;
         String query = "SELECT SUM(" + ShoppingCartTable.COLUMN_CART_ITEM_TOTAL_PRICE + ") FROM " + Tables.SHOPPING_CART;
-        Cursor cursor = mDbHelper.rawQuery(query, null);
+        Cursor cursor = mDbHelper.query(query);
         if (cursor.moveToFirst()) {
             total = cursor.getDouble(0);
         }
@@ -111,7 +121,7 @@ public class ShoppingCartManager {
     public double getDiscountTotal() {
         double total = 0;
         String query = "SELECT SUM(" + ShoppingCartTable.COLUMN_CART_ITEM_DISCOUNT_RATE + ") FROM " + Tables.SHOPPING_CART;
-        Cursor cursor = mDbHelper.rawQuery(query, null);
+        Cursor cursor = mDbHelper.query(query);
         if (cursor.moveToFirst()) {
             total = cursor.getDouble(0);
         }
