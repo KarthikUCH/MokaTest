@@ -12,13 +12,12 @@ public class DbConstants {
     public static final int DB_VERSION = 1;
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
-    private static final String LONG_TYPE = " LONG";
     private static final String REAL_TYPE = " REAL";
     private static final String AUTO_INCREMENT_TYPE = " AUTOINCREMENT";
     private static final String PRIMARY_KEY = " PRIMARY KEY";
     private static final String COMMA_SEP = ",";
 
-    interface Tables {
+    public interface Tables {
         String ITEMS = "items";
         String SHOPPING_CART = "shopping_cart";
     }
@@ -43,19 +42,19 @@ public class DbConstants {
     // CREATE TABLE SQL QUERY
 
     public static final String SQL_CREATE_ITEMS_TABLE =
-            "CREATE TABLE " + Tables.ITEMS + " ("
+            "CREATE TABLE IF NOT EXISTS " + Tables.ITEMS + " ("
                     + ItemsTable._ID + INTEGER_TYPE + PRIMARY_KEY + AUTO_INCREMENT_TYPE + COMMA_SEP
                     + ItemsTable.COLUMN_ITEM_ID + INTEGER_TYPE + COMMA_SEP
                     + ItemsTable.COLUMN_ITEM_ALBUM_ID + INTEGER_TYPE + COMMA_SEP
                     + ItemsTable.COLUMN_ITEM_TITLE + TEXT_TYPE + COMMA_SEP
-                    + ItemsTable.COLUMN_ITEM_PRICE + LONG_TYPE + COMMA_SEP
+                    + ItemsTable.COLUMN_ITEM_PRICE + INTEGER_TYPE + COMMA_SEP
                     + ItemsTable.COLUMN_ITEM_URL + TEXT_TYPE + COMMA_SEP
                     + ItemsTable.COLUMN_ITEM_THUMBNAIL_URL + TEXT_TYPE + COMMA_SEP
                     + " UNIQUE (" + ItemsTable.COLUMN_ITEM_ID + ") ON CONFLICT IGNORE)";
 
 
     public static final String SQL_CREATE_SHOPPING_CART_TABLE =
-            "CREATE TABLE " + Tables.SHOPPING_CART + " ("
+            "CREATE TABLE IF NOT EXISTS " + Tables.SHOPPING_CART + " ("
                     + ShoppingCartTable._ID + INTEGER_TYPE + PRIMARY_KEY + AUTO_INCREMENT_TYPE + COMMA_SEP
                     + ShoppingCartTable.COLUMN_CART_ITEM_ID + INTEGER_TYPE + COMMA_SEP
                     + ShoppingCartTable.COLUMN_CART_ITEM_QUANTITY + INTEGER_TYPE + COMMA_SEP
@@ -68,8 +67,8 @@ public class DbConstants {
 
     // DROP TABLE SQL QUERY
 
-    public static final String SQL_DROP_ITEMS_TABLE = "DROP TABLE IF EXISTS" + Tables.ITEMS;
-    public static final String SQL_DROP_SHOPPING_CART_TABLE = "DROP TABLE IF EXISTS" + Tables.SHOPPING_CART;
+    public static final String SQL_DROP_ITEMS_TABLE = "DROP TABLE IF EXISTS " + Tables.ITEMS;
+    public static final String SQL_DROP_SHOPPING_CART_TABLE = "DROP TABLE IF EXISTS " + Tables.SHOPPING_CART;
 
 
     // INSERT QUERY
