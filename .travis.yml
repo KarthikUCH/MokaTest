@@ -3,10 +3,10 @@ sudo: required
 jdk: oraclejdk8
 
 # safelist
-branches:
-  only:
-  - master
-  - develop
+#branches:
+#  only:
+#  - master
+#  - develop
 
 android:
   components:
@@ -45,4 +45,4 @@ android:
   - chmod +x gradlew
 
   script:
-  - "./gradlew clean"
+  - ./gradlew build
