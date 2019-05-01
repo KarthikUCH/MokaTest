@@ -16,6 +16,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    flavorDimensions "default"
+
+    productFlavors{
+        mokapos{
+            applicationId "moka.pos.test"
+            dimension  "default"
+        }
+        mokapay {
+            applicationId "moka.pos.test.mokapay"
+            dimension  "default"
+        }
+    }
 }
 
 dependencies {

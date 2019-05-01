@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import moka.pos.test.R;
 import moka.pos.test.application.ApplicationComponent;
+import moka.pos.test.constant.FlavourConstant;
 import moka.pos.test.data.model.CartItem;
 import moka.pos.test.network.model.Item;
 import moka.pos.test.ui.addtocart.AddToCartDialogFragment;
@@ -70,7 +71,7 @@ public class MainActivity extends BaseActivity implements IMainView, ItemListFra
     @Override
     public void displayLibrary() {
         imgBack.setVisibility(View.GONE);
-        tvLibTitle.setText(getString(R.string.text_title_library));
+        tvLibTitle.setText(FlavourConstant.CONSTANT);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
