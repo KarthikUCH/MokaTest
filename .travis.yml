@@ -44,4 +44,4 @@ android:
     - TERM=dumb ./gradlew -s assembleMokaposDebug
 
 script:
-  - ./gradlew assembleMokaposDebug  --stacktrace
+  - ./gradlew assembleMokaposDebug  --info
