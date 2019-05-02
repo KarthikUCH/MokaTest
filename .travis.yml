@@ -44,4 +44,4 @@ android:
     - TERM=dumb ./gradlew -s assembleFlavoroneDebug
 
 script:
-  - ./gradlew assembleFlavoroneDebug  --debug
+  - ./gradlew assembleFlavoroneDebug  --info
