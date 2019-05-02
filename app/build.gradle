@@ -20,11 +20,11 @@ android {
     flavorDimensions "default"
 
     productFlavors{
-        mokapos{
+        flavorone{
             applicationId "moka.pos.test"
             dimension  "default"
         }
-        mokapay {
+        flavortwo {
             applicationId "moka.pos.test.mokapay"
             dimension  "default"
         }

@@ -41,7 +41,7 @@ android:
     - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
 
     install:
-    - TERM=dumb ./gradlew -s assembleMokaposDebug
+    - TERM=dumb ./gradlew -s assembleFlavoroneDebug
 
 script:
-  - ./gradlew assembleMokaposDebug  --info
+  - ./gradlew assembleFlavoroneDebug  --info
