@@ -29,6 +29,24 @@ android {
             dimension  "default"
         }
     }
+
+    sourceSets {
+        flavouronedebug {
+            java.srcDirs 'src/flavouronedebug/java'
+        }
+
+        flavouronerelease {
+            java.srcDirs 'src/flavouronerelease/java'
+        }
+
+        flavourtwodebug {
+            java.srcDirs 'src/flavourtwodebug/java'
+        }
+
+        flavourtworelease {
+            java.srcDirs 'src/flavourtworelease/java'
+        }
+    }
 }
 
 dependencies {
