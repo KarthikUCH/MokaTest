@@ -44,6 +44,6 @@ android:
     - TERM=dumb ./gradlew -s assembleFlavoroneDebug
 
 script:
-  - ./gradlew assembleFlavoroneDebug  --stacktrace
+  - ./gradlew assembleFlavoroneDebug  --info
 
 after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
